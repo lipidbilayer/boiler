@@ -14,12 +14,13 @@ import (
 )
 
 const (
-	ISSUER_KEY       = "iss"
-	ISSUED_AT_KEY    = "iat"
-	EXPIRATION_KEY   = "exp"
-	SUBJECT_KEY      = "sub"
-	EXPIRE_OFFSET    = 3600
-	TOKEN_CLAIMS_KEY = "jwt.auth.claims"
+	ISSUER_KEY             = "iss"
+	ISSUED_AT_KEY          = "iat"
+	EXPIRATION_KEY         = "exp"
+	SUBJECT_KEY            = "sub"
+	EXPIRE_OFFSET          = 3600
+	TOKEN_CLAIMS_KEY       = "jwt.auth.claims"
+	AUTHENTICATED_USER_KEY = "jwt.auth.user"
 )
 
 // Objects implementing the AuthHandler interface can be

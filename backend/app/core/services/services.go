@@ -1,9 +1,15 @@
 package service
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/lipidbilayer/boiler/app/models"
+)
 
 type DatabaseService interface {
 	Stop()
+	GetUserWithPassword(*models.User) error
+	ShowUser(*models.User) error
 }
 
 type ConfigService interface {
