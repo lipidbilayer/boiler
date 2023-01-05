@@ -1,1 +1,4 @@
+lib/files
+resources/secret
+config.yml
 vendor
