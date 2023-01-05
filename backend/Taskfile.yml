@@ -1,0 +1,14 @@
+version: '3'
+
+tasks:
+  migrate-create:
+    cmds: 
+      - migrate create -ext sql -dir resources/sql "{{.CLI_ARGS}}"
+        
+  generate-secret:
+    cmds:
+      - ssh-keygen -t rsa -P "" -b 4096 -m PEM -f resources/secret/jwtRS256.key ssh-keygen -e -m PEM -f resources/secret/jwtRS256.key > resources/secret/jwtRS256.key.pub
+
+  build-file:
+    cmds:
+      - statik -f -m -src=resources -dest=lib/ -p files
