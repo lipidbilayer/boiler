@@ -12,6 +12,15 @@ func (d *DatabaseBun) GetUserWithPassword(ctx context.Context, user *models.User
 	return d.errorDatabase(err, "User")
 }
 
+func (d *DatabaseBun) IndexUser(ctx context.Context) ([]*models.User, error) {
+	var items []*models.User
+	err := d.DB.NewSelect().Model(&items).Scan(ctx)
+	for index := range items {
+		items[index].Password = nil
+	}
+	return items, err
+}
+
 func (d *DatabaseBun) ShowUser(ctx context.Context, item *models.User) error {
 	err := d.DB.NewSelect().Model(item).WherePK().Scan(ctx)
 	if item != nil {
@@ -43,9 +52,15 @@ func (d *DatabaseBun) UpdateUser(ctx context.Context, item *models.User) error {
 	}
 
 	_, err := d.DB.NewUpdate().Model(item).WherePK().OmitZero().Exec(ctx)
-	if item != nil {
-		item.Password = nil
+	if err != nil {
+		return d.errorDatabase(err, "User")
 	}
+
+	err = d.ShowUser(ctx, item)
+	if err != nil {
+		return d.errorDatabase(err, "User")
+	}
+
 	return d.errorDatabase(err, "User")
 }
 

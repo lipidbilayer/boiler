@@ -12,8 +12,11 @@ type Extractor func(*fiber.Ctx) (string, error)
 
 func NewJWTMiddleware(auth service.AuthService, database service.DatabaseService) fiber.Handler {
 
-	tokenString := ""
 	return func(c *fiber.Ctx) error {
+		tokenString, err := TokenExtractor(c)
+		if err != nil {
+			return err
+		}
 		// need filter to bypass auth controller
 		claim, err := auth.CheckToken(tokenString)
 		if err != nil {
@@ -28,6 +31,7 @@ func NewJWTMiddleware(auth service.AuthService, database service.DatabaseService
 		user := &models.User{ID: userID}
 		err = database.ShowUser(c.Context(), user)
 		if err != nil {
+			return err
 			// throw user not found or unexpected error
 		}
 		c.Locals(TOKEN_CLAIMS_KEY, claim)

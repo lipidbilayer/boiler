@@ -10,7 +10,11 @@ import (
 type DatabaseService interface {
 	Stop()
 	GetUserWithPassword(context.Context, *models.User) error
+	IndexUser(context.Context) ([]*models.User, error)
 	ShowUser(context.Context, *models.User) error
+	CreateUser(context.Context, *models.User) error
+	UpdateUser(context.Context, *models.User) error
+	DeleteUser(context.Context, *models.User) error
 }
 
 type ConfigService interface {
