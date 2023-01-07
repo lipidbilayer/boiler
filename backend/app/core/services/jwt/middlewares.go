@@ -26,7 +26,7 @@ func NewJWTMiddleware(auth service.AuthService, database service.DatabaseService
 		}
 
 		user := &models.User{ID: userID}
-		err = database.ShowUser(user)
+		err = database.ShowUser(c.Context(), user)
 		if err != nil {
 			// throw user not found or unexpected error
 		}

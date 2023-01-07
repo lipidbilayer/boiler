@@ -8,7 +8,8 @@ import (
 
 func Auth(routes fiber.Router, service *core.AppServices) {
 	auth := controllers.NewAuth(service)
-	ping := routes.Group("/auth")
+	authRoute := routes.Group("/auth")
 
-	ping.Get("/login", auth.Login)
+	authRoute.Post("/login", auth.Login)
+	authRoute.Get("/profile", auth.Profile)
 }

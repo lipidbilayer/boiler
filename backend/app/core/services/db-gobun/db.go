@@ -2,9 +2,11 @@ package dbgobun
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
 	service "github.com/lipidbilayer/boiler/app/core/services"
+	"github.com/lipidbilayer/boiler/lib/apperror"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
@@ -33,4 +35,19 @@ func (d *DatabaseBun) Stop() {
 	if err := db.Close(); err != nil {
 		log.Panic("Failed to close the database", "error", err)
 	}
+}
+
+func (d *DatabaseBun) errorDatabase(err error, model string) error {
+	if err == nil {
+		return nil
+	}
+	switch err.Error() {
+	case "sql: no rows in result set":
+		return apperror.NewError(err, fmt.Sprintf("%s tidak di temukan", model), apperror.NotFoundError)
+	}
+	// switch err {
+	// case pg.ErrNoRows:
+	// 	return apperror.NewError(err, fmt.Sprintf("%s tidak di temukan", model), apperror.NotFoundError)
+	// }
+	return err
 }

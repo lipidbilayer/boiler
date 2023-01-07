@@ -24,10 +24,11 @@ func New() *Base {
 	var cfg Base
 	err := cleanenv.ReadConfig("config.yml", &cfg)
 	if err != nil {
+		log.Printf("Failed to read config file %v", err)
 		err = cleanenv.ReadConfig("../../config.yml", &cfg)
 	}
 	if err != nil {
-		log.Panic("Failed to read config file")
+		log.Panicf("Failed to read config file %v", err)
 	}
 	return &cfg
 }

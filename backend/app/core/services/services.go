@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/lipidbilayer/boiler/app/models"
@@ -8,8 +9,8 @@ import (
 
 type DatabaseService interface {
 	Stop()
-	GetUserWithPassword(*models.User) error
-	ShowUser(*models.User) error
+	GetUserWithPassword(context.Context, *models.User) error
+	ShowUser(context.Context, *models.User) error
 }
 
 type ConfigService interface {

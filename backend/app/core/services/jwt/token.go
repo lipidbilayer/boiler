@@ -12,7 +12,7 @@ type AuthClaim struct {
 	jwt.RegisteredClaims
 }
 
-func GenerateToken(id int64, locationID int64, username string) (string, error) {
+func GenerateToken(id int64, username string) (string, error) {
 	authClaim := AuthClaim{}
 	authClaim.RegisteredClaims = jwt.RegisteredClaims{
 		Subject:   username,
@@ -21,7 +21,6 @@ func GenerateToken(id int64, locationID int64, username string) (string, error) 
 		ExpiresAt: jwt.NewNumericDate(time.Now().Add(expiration * time.Minute)),
 		NotBefore: jwt.NewNumericDate(time.Now()),
 	}
-	authClaim.LocationID = locationID
 
 	if isIssuerExists {
 		authClaim.Issuer = issuer

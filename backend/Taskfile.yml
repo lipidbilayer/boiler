@@ -1,13 +1,21 @@
 version: '3'
 
 tasks:
+  run:
+    cmds:
+      - go run app.go
+
+  migrate:
+    cmds:
+      - migrate -source file://resources/sql -database postgres://root:@localhost:5432/car_pool?sslmode=disable up
   migrate-create:
     cmds: 
       - migrate create -ext sql -dir resources/sql "{{.CLI_ARGS}}"
         
   generate-secret:
     cmds:
-      - ssh-keygen -t rsa -P "" -b 4096 -m PEM -f resources/secret/jwtRS256.key ssh-keygen -e -m PEM -f resources/secret/jwtRS256.key > resources/secret/jwtRS256.key.pub
+      - ssh-keygen -t rsa -P "" -b 4096 -m PEM -f resources/secret/jwtRS256.key 
+      - ssh-keygen -e -m PEM -f resources/secret/jwtRS256.key > resources/secret/jwtRS256.key.pub
 
   build-file:
     cmds:

@@ -3,9 +3,12 @@ package models
 import (
 	"context"
 	"time"
+
+	"github.com/uptrace/bun"
 )
 
 type BaseModel struct {
+	bun.BaseModel
 	CreatedAt *time.Time `json:"created_at,omitempty" sql:"default:now()"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty" sql:"default:now()"`
 	DeletedAt *time.Time `json:"deleted_at,omitempty" pg:",soft_delete"`
