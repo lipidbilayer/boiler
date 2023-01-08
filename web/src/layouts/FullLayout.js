@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Container } from "reactstrap";
-import UserProfile from "../api/user/user";
+// import UserProfile from "../api/user/user";
 import Header from "./header/Header";
 import Sidebar from "./sidebars/vertical/Sidebar";
 
@@ -18,7 +18,7 @@ const FullLayout = ({ children }) => {
   }
 
   useEffect(() => {
-    UserProfile({setLoading: setLoading, setData: setUser})
+    // UserProfile({setLoading: setLoading, setData: setUser})
     document.addEventListener("mousedown", handleClickOutside, false);
     return () => document.removeEventListener('mousedown', handleClickOutside, false);
   }, [])

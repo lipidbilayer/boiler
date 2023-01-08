@@ -76,9 +76,6 @@ const Sidebar = ({ showMobilemenu, loading }) => {
   const location = curl.pathname;
 
   const SidebarMenu = () => {
-    if(loading){
-      return (<div>)
-    }else{
       return (        
         <Nav vertical className="sidebarNav">
         {navigation.map((navi, index) => (
@@ -98,8 +95,6 @@ const Sidebar = ({ showMobilemenu, loading }) => {
             </NavItem>
           ))}
         </Nav>)
-    }
-
   }
 
   return (
