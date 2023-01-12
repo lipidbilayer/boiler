@@ -28,11 +28,11 @@ func CheckToken(tokenString string) (interface{}, error) {
 				log.Print("Timing is everything, Token is either expired or not active yet")
 				err = apperror.NewError(err, "Token expired", apperror.AuthError)
 			} else {
-				log.Print("Couldn't handle this token: %v", err)
+				log.Printf("Couldn't handle this token: %v", err)
 				err = apperror.NewError(err, "Unknown error token", apperror.AuthError)
 			}
 		} else {
-			log.Print("Couldn't handle this token: %v", err)
+			log.Printf("Couldn't handle this token: %v", err)
 		}
 	}
 	return nil, err

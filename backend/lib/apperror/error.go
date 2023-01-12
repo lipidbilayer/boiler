@@ -6,9 +6,9 @@ const (
 )
 
 type CommonError struct {
-	ParentError error `json:"-"`
-	Code        int
-	Message     string
+	ParentError error  `json:"-"`
+	Code        int    `json:"code"`
+	Message     string `json:"message"`
 }
 
 func (e CommonError) Error() string {

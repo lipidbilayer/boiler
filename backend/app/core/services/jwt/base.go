@@ -3,7 +3,9 @@ package jwt
 import (
 	"strconv"
 
+	"github.com/golang-jwt/jwt/v4"
 	service "github.com/lipidbilayer/boiler/app/core/services"
+	"github.com/lipidbilayer/boiler/lib/apperror"
 )
 
 type JWTAuth struct {
@@ -37,9 +39,9 @@ func (a *JWTAuth) GetAuthUserID(tokenString string) (int64, error) {
 }
 
 func (a *JWTAuth) errorDatabase(err error) error {
-	// switch err.(type) {
-	// case *jwt.ValidationError:
-	// 	return apperror.NewError(err, "token tidak di temukan", apperror.AuthError)
-	// }
+	switch err.(type) {
+	case *jwt.ValidationError:
+		return apperror.NewError(err, "token tidak di temukan", apperror.AuthError)
+	}
 	return err
 }
