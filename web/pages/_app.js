@@ -3,6 +3,7 @@ import Head from "next/head";
 import NextNProgress from "nextjs-progressbar";
 import "../styles/style.scss";
 import "../styles/printlayout.css"
+import { UserProvider } from '../src/contexts/user';
 
 function MyApp({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => <FullLayout>{page}</FullLayout>)
@@ -14,7 +15,9 @@ function MyApp({ Component, pageProps }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NextNProgress color="#c8e1cc" height={5} />
+      <UserProvider>
       {getLayout(<Component {...pageProps} />)}
+      </UserProvider>
     </>
   );
 }
