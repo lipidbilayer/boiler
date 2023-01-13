@@ -4,8 +4,7 @@ import Link from "next/link";
 import {Button, Card, CardBody, CardTitle, CardSubtitle, Table, A, Progress } from "reactstrap";
 import moment, { utc } from 'moment';
 
-const GenericTable = ({data, deleteToggle, detailToggle}) => {  
-
+const GenericTable = ({header, rows, deleteToggle, detailToggle}) => {  
   const RenderAction = ({row, action, deleteToggle, detailToggle}) => {
     if(action.text == "Edit"){
       const url = action.url+row.id
@@ -86,23 +85,23 @@ const GenericTable = ({data, deleteToggle, detailToggle}) => {
   return (
     <Card>
       <CardBody>
-        <CardTitle tag="h5">{data.title}</CardTitle>
+        <CardTitle tag="h5">{header.title}</CardTitle>
         <CardSubtitle className="mb-2 text-muted" tag="h6">
-          {data.subtitle}
+          {header.subtitle}
         </CardSubtitle>
         <div className="table-responsive">
           <Table className="text-nowrap mt-3 align-middle" borderless>
             <thead>
               <tr>
-              {data.head.map((tdata, index) => (
+              {header.head.map((tdata, index) => (
                 <th key={tdata}>{tdata}</th>
               ))}
               </tr>
             </thead>
             <tbody>
-              {data.rows.map((tdata, index) => (
+              {rows.map((tdata, index) => (
                 <tr key={index} className="border-top">
-                      {data.show.map((key, index) => {
+                      {header.show.map((key, index) => {
                         // ({key: key, row:tdata, deleteToggle}
                         return (<RenderRow key={index} type={key} row={tdata} deleteToggle={deleteToggle} />);
                 })}

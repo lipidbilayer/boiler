@@ -9,7 +9,6 @@ import bg1 from "../src/assets/images/bg/bg1.jpg";
 import bg2 from "../src/assets/images/bg/bg2.jpg";
 import bg3 from "../src/assets/images/bg/bg3.jpg";
 import bg4 from "../src/assets/images/bg/bg4.jpg";
-import UserProfileAPI from "../src/api/user/user";
 import { useEffect, useState } from "react";
 
 export default function Home() {

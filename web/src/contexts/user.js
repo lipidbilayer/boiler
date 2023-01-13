@@ -1,15 +1,14 @@
 import { createContext, useState, useEffect } from 'react';
-import { UserProfileAPI } from '../api/user/user';
+import UserProfile from '../api/user/profile';
 
-const UserContext = createContext(0, () => {});
+const UserContext = createContext(0);
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
 
   useEffect(() => {
-    let data = UserProfileAPI()
-    setUser(data);
+    UserProfile(setUser, null)
     }, [])
 
 

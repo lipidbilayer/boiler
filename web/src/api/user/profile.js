@@ -6,17 +6,24 @@ export const UserProfileAPI = async () => {
     return data
 }
 
-const UserProfile = ({setLoading, setData}) => {
-    setLoading(true)
+const UserProfile = ({setData, setLoading}) => {
+    if (setLoading !== undefined) {
+        setLoading(true)
+    }
+
 
     fetch(process.env.NEXT_PUBLIC_SERVER_API_URL+'/auth/profile')
     .then((response) => response.json())
     .then((data) => {
         setData(data)
-        setLoading(false)
+        if (setLoading !== undefined) {
+            setLoading(false)
+        }
     })
     .catch((error) => {
-        setLoading(false)
+        if (setLoading !== undefined) {
+            setLoading(false)
+        }
     });
 }
 
