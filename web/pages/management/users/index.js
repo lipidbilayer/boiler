@@ -4,8 +4,10 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import UserTable from "../../../src/components/data/GenericTable";
 import ButtonSubmitLoader from '../../../src/components/data/ButtonSubmitLoader';
+import Delete from '../../../src/components/modal/delete';
 import { getCookie } from 'cookies-next';
-import UserList from '../../../src/api/user/list';
+import UserList from '../../../src/api/user/admin';
+
 
 export const getServerSideProps = async (ctx) => {
   const header = {
@@ -82,20 +84,7 @@ const Tables = ({header, actions}) => {
         <div className="clearfix"></div>
         <UserTable header={header} rows={data} deleteToggle={deleteToggle}/>
       </Col>
-      <Modal isOpen={deleteModal} toggle={deleteToggle}>
-        <ModalHeader toggle={deleteToggle}>Hapus User?</ModalHeader>
-        <ModalBody>
-          Hapus user <b>{deleteObject.name}</b>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={deleteToggle}>
-            Cancel
-          </Button>
-          <Button color="danger" disabled={loader} onClick={deleteUser}>
-            <ButtonSubmitLoader loader={loader} text="Delete" />
-          </Button>
-        </ModalFooter>
-      </Modal>
+      <Delete></Delete>
     </Row>
   );
 };

@@ -5,7 +5,10 @@ const UserList = ({setData, actions, setLoading}) => {
 
 
     fetch(process.env.NEXT_PUBLIC_SERVER_API_URL+'/api/user')
-    .then((response) => response.json())
+    .then((response) => {
+        console.log(response)
+        response.json()
+    })
     .then((data) => {
         data.map((tdata, index) => {
             data[index]['action'] = actions;
@@ -16,6 +19,7 @@ const UserList = ({setData, actions, setLoading}) => {
         }
     })
     .catch((error) => {
+        // console.log(error);
         if (setLoading != null) {
             setLoading(false)
         }
