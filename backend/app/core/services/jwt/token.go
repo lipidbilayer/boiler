@@ -12,7 +12,7 @@ type AuthClaim struct {
 	jwt.RegisteredClaims
 }
 
-func GenerateToken(id int64, username string) (string, error) {
+func generateToken(id int64, username string, expiration time.Duration) (string, error) {
 	authClaim := AuthClaim{}
 	authClaim.RegisteredClaims = jwt.RegisteredClaims{
 		Subject:   username,
@@ -32,7 +32,7 @@ func GenerateToken(id int64, username string) (string, error) {
 	return tokenString, err
 }
 
-func ParseToken(tokenString string) (*jwt.Token, *AuthClaim, error) {
+func parseToken(tokenString string) (*jwt.Token, *AuthClaim, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &AuthClaim{}, func(token *jwt.Token) (interface{}, error) {
 		return publicKey, nil
 	})

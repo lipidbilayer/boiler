@@ -11,5 +11,6 @@ func Auth(routes fiber.Router, service *core.AppServices) {
 	authRoute := routes.Group("/auth")
 
 	authRoute.Post("/login", auth.Login)
+	authRoute.Post("/refresh/token", auth.RefreshToken)
 	authRoute.Get("/profile", auth.Profile)
 }

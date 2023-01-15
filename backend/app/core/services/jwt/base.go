@@ -16,8 +16,16 @@ func New(config service.ConfigService, file service.EmbeddedFile) *JWTAuth {
 	return &JWTAuth{}
 }
 
+func (a *JWTAuth) GenerateRefreshToken(id int64) (string, error) {
+	return generateToken(id, "", refreshExpiration)
+}
+
+func (a *JWTAuth) GenerateAccessToken(id int64, username string) (string, error) {
+	return generateToken(id, username, refreshExpiration)
+}
+
 func (a *JWTAuth) ParseToken(tokenString string) (interface{}, error) {
-	token, _, err := ParseToken(tokenString)
+	token, _, err := parseToken(tokenString)
 	return token, err
 }
 
@@ -30,7 +38,7 @@ func (a *JWTAuth) GetAuthToken(authHeader string) string {
 }
 
 func (a *JWTAuth) GetAuthUserID(tokenString string) (int64, error) {
-	_, claim, err := ParseToken(tokenString)
+	_, claim, err := parseToken(tokenString)
 	if err != nil {
 		return 0, a.errorDatabase(err)
 	}

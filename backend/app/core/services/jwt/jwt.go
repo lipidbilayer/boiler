@@ -39,12 +39,13 @@ func (f AuthHandlerFunc) Authenticate(u, p string) (string, bool) {
 }
 
 var (
-	Realm          string
-	issuer         string
-	privateKey     *rsa.PrivateKey
-	publicKey      *rsa.PublicKey
-	expiration     time.Duration // in minutues
-	isIssuerExists bool
+	Realm             string
+	issuer            string
+	privateKey        *rsa.PrivateKey
+	publicKey         *rsa.PublicKey
+	expiration        time.Duration // in minutues
+	refreshExpiration time.Duration //in minutes
+	isIssuerExists    bool
 	// handler        AuthHandler
 )
 
@@ -55,6 +56,7 @@ func Init(config service.ConfigService, file service.EmbeddedFile) {
 	Realm = config.GetJWTRealmName()
 	issuer = config.GetJWTIssuerName()
 	expiration = time.Duration(config.GetJWTExpiration())
+	refreshExpiration = time.Duration(config.GetJWTRefreshExpiration())
 
 	// if _, ok := authHandler.(AuthHandler); !ok {
 	// 	revel.AppLog.Fatal("Auth Handler doesn't implement interface jwt.AuthenticationHandler")

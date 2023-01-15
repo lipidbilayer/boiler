@@ -16,7 +16,7 @@ func GetAuthToken(authorization string) string {
 }
 
 func CheckToken(tokenString string) (interface{}, error) {
-	token, _, err := ParseToken(tokenString)
+	token, _, err := parseToken(tokenString)
 	if err == nil && token.Valid && !IsInBlocklist(tokenString) {
 		return token.Claims, nil
 	} else {

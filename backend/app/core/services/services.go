@@ -22,6 +22,7 @@ type ConfigService interface {
 	GetDatabaseURL() string
 	GetJWTRealmName() string
 	GetJWTExpiration() int64
+	GetJWTRefreshExpiration() int64
 	GetJWTIssuerName() string
 	GetJWTPublicKeyPath() string
 	GetJWTPrivateKeyPath() string
@@ -33,6 +34,8 @@ type AuthService interface {
 	CheckToken(token string) (interface{}, error)
 	GetAuthToken(authHeader string) string
 	GetAuthUserID(token string) (int64, error)
+	GenerateAccessToken(id int64, username string) (string, error)
+	GenerateRefreshToken(id int64) (string, error)
 }
 
 type EmbeddedFile interface {

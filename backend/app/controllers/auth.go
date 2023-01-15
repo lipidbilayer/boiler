@@ -19,6 +19,10 @@ func NewAuth(service *core.AppServices) *Auth {
 	return auth
 }
 
+type AuthRefresh struct {
+	RefreshToken string `json:"refresh_token"`
+}
+
 func (a Auth) Login(c *fiber.Ctx) error {
 	user, err := a.parseUserInfo(c)
 	if err != nil {
@@ -30,13 +34,19 @@ func (a Auth) Login(c *fiber.Ctx) error {
 		return err
 	}
 
-	token, err := jwt.GenerateToken(user.ID, user.Username)
+	token, err := a.Services.AuthService.GenerateAccessToken(user.ID, user.Username)
+	if err != nil {
+		return err
+	}
+
+	refreshToken, err := a.Services.AuthService.GenerateRefreshToken(user.ID)
 	if err != nil {
 		return err
 	}
 
 	return c.Status(http.StatusOK).JSON(map[string]string{
-		"token": token,
+		"token":         token,
+		"refresh_token": refreshToken,
 	})
 }
 
@@ -56,6 +66,40 @@ func (a Auth) Profile(c *fiber.Ctx) error {
 	}
 
 	return c.Status(http.StatusOK).JSON(user)
+}
+
+func (a Auth) RefreshToken(c *fiber.Ctx) error {
+	params := &AuthRefresh{}
+	err := c.BodyParser(params)
+	if err != nil {
+		return err
+	}
+
+	userID, err := a.Services.AuthService.GetAuthUserID(params.RefreshToken)
+	if err != nil {
+		return err
+	}
+
+	user := &models.User{ID: userID}
+	err = a.Services.Database.ShowUser(c.Context(), user)
+	if err != nil {
+		return err
+	}
+
+	token, err := a.Services.AuthService.GenerateAccessToken(user.ID, user.Username)
+	if err != nil {
+		return err
+	}
+
+	refreshToken, err := a.Services.AuthService.GenerateRefreshToken(user.ID)
+	if err != nil {
+		return err
+	}
+
+	return c.Status(http.StatusOK).JSON(map[string]string{
+		"token":         token,
+		"refresh_token": refreshToken,
+	})
 }
 
 func (a Auth) parseUserInfo(c *fiber.Ctx) (*models.User, error) {

@@ -11,11 +11,12 @@ type Base struct {
 
 	DatabaseURL string `yaml:"DATABASE_URL" env:"DATABASE_URL"`
 
-	JWTRealmName      string `yaml:"JWT_REALM_NAME" env:"JWT_REALM_NAME"`
-	JWTExpiration     int64  `yaml:"JWT_EXPIRATION" env:"JWT_EXPIRATION"`
-	JWTIssuerName     string `yaml:"JWT_ISSUER_NAME" env:"JWT_ISSUER_NAME"`
-	JWTPublicKeyPath  string `yaml:"JWT_PUBLIC_KEY_PATH" env:"JWT_PUBLIC_KEY_PATH"`
-	JWTPrivateKeyPath string `yaml:"JWT_PRIVATE_KEY_PATH" env:"JWT_PRIVATE_KEY_PATH"`
+	JWTRealmName         string `yaml:"JWT_REALM_NAME" env:"JWT_REALM_NAME"`
+	JWTExpiration        int64  `yaml:"JWT_EXPIRATION" env:"JWT_EXPIRATION"`
+	JWTRefreshExpiration int64  `yaml:"JWT_REFRESH_EXPIRATION" env:"JWT_REFRESH_EXPIRATION"`
+	JWTIssuerName        string `yaml:"JWT_ISSUER_NAME" env:"JWT_ISSUER_NAME"`
+	JWTPublicKeyPath     string `yaml:"JWT_PUBLIC_KEY_PATH" env:"JWT_PUBLIC_KEY_PATH"`
+	JWTPrivateKeyPath    string `yaml:"JWT_PRIVATE_KEY_PATH" env:"JWT_PRIVATE_KEY_PATH"`
 
 	SentryDSN string `yaml:"SENTRY_DSN" env:"SENTRY_DSN"`
 }
@@ -47,6 +48,10 @@ func (b *Base) GetJWTRealmName() string {
 
 func (b *Base) GetJWTExpiration() int64 {
 	return b.JWTExpiration
+}
+
+func (b *Base) GetJWTRefreshExpiration() int64 {
+	return b.JWTRefreshExpiration
 }
 
 func (b *Base) GetJWTIssuerName() string {
