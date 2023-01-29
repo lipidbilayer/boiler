@@ -21,7 +21,7 @@ func (a *JWTAuth) GenerateRefreshToken(id int64) (string, error) {
 }
 
 func (a *JWTAuth) GenerateAccessToken(id int64, username string) (string, error) {
-	return generateToken(id, username, refreshExpiration)
+	return generateToken(id, username, expiration)
 }
 
 func (a *JWTAuth) ParseToken(tokenString string) (interface{}, error) {
