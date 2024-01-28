@@ -6,6 +6,7 @@ import (
 	"log"
 
 	service "github.com/lipidbilayer/boiler/app/core/services"
+	"github.com/lipidbilayer/boiler/app/models"
 	"github.com/lipidbilayer/boiler/lib/apperror"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
@@ -28,7 +29,13 @@ func New(config service.ConfigService) *DatabaseBun {
 	db.AddQueryHook(bundebug.NewQueryHook(bundebug.WithVerbose(true), bundebug.WithEnabled(config.GetDebugMode())))
 
 	dbService := DatabaseBun{db}
+	dbService.RegisterTable()
 	return &dbService
+}
+
+func (d *DatabaseBun) RegisterTable() {
+	db.RegisterModel((*models.RoleToAccess)(nil))
+	db.RegisterModel((*models.OrderToItem)(nil))
 }
 
 func (d *DatabaseBun) Stop() {

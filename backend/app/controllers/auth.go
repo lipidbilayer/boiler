@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/lipidbilayer/boiler/app/core"
@@ -40,6 +41,13 @@ func (a Auth) Login(c *fiber.Ctx) error {
 	}
 
 	refreshToken, err := a.Services.AuthService.GenerateRefreshToken(user.ID)
+	if err != nil {
+		return err
+	}
+	now := time.Now()
+	user.LastLoginAt = &now
+
+	err = a.Services.Database.UpdateUser(c.Context(), user)
 	if err != nil {
 		return err
 	}

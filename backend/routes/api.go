@@ -16,4 +16,9 @@ func Api(routes fiber.Router, service *core.AppServices) {
 	userRoute.Post("/", user.Create)
 	userRoute.Patch("/:id", user.Update)
 	userRoute.Delete("/:id", user.Delete)
+
+	role := controllers.NewRole(service)
+	roleRoute := routes.Group("/api/role", jwt.NewJWTMiddleware(core.Services.AuthService, core.Services.Database))
+
+	roleRoute.Get("/", role.Index)
 }

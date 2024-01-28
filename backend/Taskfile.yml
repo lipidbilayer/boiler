@@ -1,5 +1,8 @@
 version: '3'
 
+env:
+  DATABASE_URL: "postgres://root:@localhost:5432/boiler?sslmode=disable"
+
 tasks:
   run:
     cmds:
@@ -7,10 +10,15 @@ tasks:
 
   migrate:
     cmds:
-      - migrate -source file://resources/sql -database postgres://root:@localhost:5432/car_pool?sslmode=disable up
+      - migrate -source file://resources/sql -database {{.DATABASE_URL}} up
+  migrate-drop:
+    cmds:
+      - migrate -database {{.DATABASE_URL}} -source file://resources/sql drop
   migrate-create:
     cmds: 
-      - migrate create -ext sql -dir resources/sql "{{.CLI_ARGS}}"
+      - migrate create -ext sql -dir resources/sql "{{.FILE_NAME}}"
+    requires:
+      vars: [FILE_NAME]
         
   generate-secret:
     cmds:

@@ -15,6 +15,9 @@ type DatabaseService interface {
 	CreateUser(context.Context, *models.User) error
 	UpdateUser(context.Context, *models.User) error
 	DeleteUser(context.Context, *models.User) error
+
+	IndexOrder(context.Context) ([]*models.Order, error)
+	IndexRole(context.Context) ([]*models.Role, error)
 }
 
 type ConfigService interface {
